@@ -203,14 +203,14 @@ class TestClient(EClient):
         if len(new_contract_details)>1:
             print("got multiple contracts using first one")
 
-        new_contract_details=new_contract_details[0]
 
-        resolved_ibcontract=new_contract_details.summary
+        new_contract_details=new_contract_details[0]
+        resolved_ibcontract=new_contract_details.contract
 
         return resolved_ibcontract
 
 
-    def get_IB_historical_data(self, ibcontract, durationStr="1 Y", barSizeSetting="1 day",
+    def get_IB_historical_data(self, ibcontract, durationStr="1 M", barSizeSetting="1 day",
                                tickerid=DEFAULT_HISTORIC_DATA_ID):
 
         """
@@ -273,20 +273,27 @@ class TestApp(TestWrapper, TestClient):
         self.init_error()
 
 
-#if __name__ == '__main__':
+if __name__ == '__main__':
 
-app = TestApp("127.0.0.1", 6666, 10)
+    app = TestApp("127.0.0.1", 6666, 10)
 
-ibcontract = IBcontract()
-ibcontract.secType = "FUT"
-ibcontract.lastTradeDateOrContractMonth="201809"
-ibcontract.symbol="GE"
-ibcontract.exchange="GLOBEX"
+    ibcontract = IBcontract()
 
-resolved_ibcontract=app.resolve_ib_contract(ibcontract)
+    ibcontract.secType = "FUT"
+    ibcontract.lastTradeDateOrContractMonth="201809"
+    ibcontract.symbol="HSI"
+    ibcontract.exchange="HKFE"
+    """
 
-historic_data = app.get_IB_historical_data(resolved_ibcontract)
+    ibcontract.symbol = "EUR"
+    ibcontract.secType = "CASH"
+    ibcontract.currency = "USD"
+    ibcontract.exchange = "IDEALPRO"
+    """
+    resolved_ibcontract=app.resolve_ib_contract(ibcontract)
 
-print(historic_data)
+    historic_data = app.get_IB_historical_data(resolved_ibcontract)
 
-app.disconnect()
+    print(historic_data)
+
+    app.disconnect()
