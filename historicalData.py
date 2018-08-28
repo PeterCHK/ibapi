@@ -23,9 +23,14 @@ from ibapi.contract import Contract as IBcontract
 from threading import Thread
 import queue
 import datetime
+import os
+from dotenv import load_dotenv
 
-DEFAULT_HISTORIC_DATA_ID=50
-DEFAULT_GET_CONTRACT_ID=43
+load_dotenv()
+PORT = int(os.getenv("PORT"))
+HOST = os.getenv("HOST")
+DEFAULT_HISTORIC_DATA_ID = int(os.getenv("DEFAULT_HISTORIC_DATA_ID"))
+DEFAULT_GET_CONTRACT_ID = int(os.getenv("DEFAULT_GET_CONTRACT_ID"))
 
 ## marker for when queue is finished
 FINISHED = object()
@@ -275,7 +280,7 @@ class TestApp(TestWrapper, TestClient):
 
 if __name__ == '__main__':
 
-    app = TestApp("127.0.0.1", 6666, 10)
+    app = TestApp(HOST, PORT, 10)
 
     ibcontract = IBcontract()
 

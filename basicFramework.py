@@ -23,6 +23,12 @@ from ibapi.wrapper import EWrapper
 from ibapi.client import EClient
 from threading import Thread
 import queue
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+PORT = int(os.getenv("PORT"))
+HOST = os.getenv("HOST")
 
 class TestWrapper(EWrapper):
     """
@@ -124,7 +130,7 @@ if __name__ == '__main__':
     ## Check that the port is the same as on the Gateway
     ## ipaddress is 127.0.0.1 if one same machine, clientid is arbitrary
 
-    app = TestApp("127.0.0.1", 6666, 10)
+    app = TestApp(HOST, PORT, 10)
 
     current_time = app.speaking_clock()
 
