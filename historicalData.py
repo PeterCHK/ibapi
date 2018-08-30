@@ -31,6 +31,12 @@ PORT = int(os.getenv("PORT"))
 HOST = os.getenv("HOST")
 DEFAULT_HISTORIC_DATA_ID = int(os.getenv("DEFAULT_HISTORIC_DATA_ID"))
 DEFAULT_GET_CONTRACT_ID = int(os.getenv("DEFAULT_GET_CONTRACT_ID"))
+CONTRACT_DURATION = os.getenv("CONTRACT_DURATION")
+CONTRACT_BARSIZE = os.getenv("CONTRACT_BARSIZE")
+CONTRACT_SECTYPE = os.getenv("CONTRACT_SECTYPE")
+CONTRACT_LASTTRADEDATEORCONTRACTMONTH = os.getenv("CONTRACT_LASTTRADEDATEORCONTRACTMONTH")
+CONTRACT_SYMBOL = os.getenv("CONTRACT_SYMBOL")
+CONTRACT_EXCHANGE = os.getenv("CONTRACT_EXCHANGE")
 
 ## marker for when queue is finished
 FINISHED = object()
@@ -215,7 +221,7 @@ class TestClient(EClient):
         return resolved_ibcontract
 
 
-    def get_IB_historical_data(self, ibcontract, durationStr="1 M", barSizeSetting="1 day",
+    def get_IB_historical_data(self, ibcontract, durationStr=CONTRACT_DURATION, barSizeSetting=CONTRACT_BARSIZE,
                                tickerid=DEFAULT_HISTORIC_DATA_ID):
 
         """
@@ -284,10 +290,10 @@ if __name__ == '__main__':
 
     ibcontract = IBcontract()
 
-    ibcontract.secType = "FUT"
-    ibcontract.lastTradeDateOrContractMonth="201809"
-    ibcontract.symbol="HSI"
-    ibcontract.exchange="HKFE"
+    ibcontract.secType = CONTRACT_SECTYPE
+    ibcontract.lastTradeDateOrContractMonth=CONTRACT_LASTTRADEDATEORCONTRACTMONTH
+    ibcontract.symbol=CONTRACT_SYMBOL
+    ibcontract.exchange=CONTRACT_EXCHANGE
     """
 
     ibcontract.symbol = "EUR"
